@@ -1,0 +1,35 @@
+.products {
+  padding: 30px 50px;
+  display: flex;
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .filterItem {
+      h2 {
+        font-size: 20px;
+        font-weight: 400;
+      }
+      .inputItem {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+        font-size: 14px;
+      }
+    }
+  }
+  .right {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+
+    gap: 40px;
+    .topImg {
+      height: 300px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}

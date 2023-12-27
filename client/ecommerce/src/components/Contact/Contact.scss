@@ -1,0 +1,40 @@
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #068fff;
+  padding: 15px;
+  color: aliceblue;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    .title {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px 0 0 5px;
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      padding: 10px;
+      border-radius: 0 5px 5px 0;
+      background-color: #333;
+      color: aliceblue;
+
+      border: none;
+    }
+  }
+  .icons {
+    display: flex;
+    gap: 10px;
+    color: aliceblue;
+  }
+}

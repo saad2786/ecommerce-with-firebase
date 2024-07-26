@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -8,25 +8,24 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import cartReducer from './cartReducer'
-import Stripe from 'stripe'
-const stripe = Stripe(
-  'sk_test_51OP986SAlpsqJH6IIUp18sLkWRtoX2pJm5x32tfg8nR9pw6zdi2EQV5Kpk0FlpDYFxsDoUpc1FO1WRZJKzVZpSdq00kTzENbKe',
-)
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import cartReducer from "./cartReducer";
+import userReducer from "./userReducer";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   version: 1,
   storage,
-}
+};
 
-const persistedReducer = persistReducer(persistConfig, cartReducer)
+const persistedCartReducer = persistReducer(persistConfig, cartReducer);
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
-    cart: persistedReducer,
+    cart: persistedCartReducer,
+    user: persistedUserReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -35,6 +34,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-})
+});
 
-export let persistor = persistStore(store)
+export let persistor = persistStore(store);

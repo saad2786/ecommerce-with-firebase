@@ -1,0 +1,24 @@
+.profileMenu {
+  width: 10vw;
+  background-color: #fff;
+  border: 1px lightgray solid;
+  z-index: 999;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    padding: 15px;
+    text-transform: capitalize;
+    cursor: pointer;
+    &.logout {
+      color: #c40c0c;
+    }
+    &:hover {
+      background-color: #f1f1f1;
+    }
+  }
+}

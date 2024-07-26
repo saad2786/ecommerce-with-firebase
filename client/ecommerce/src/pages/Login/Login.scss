@@ -1,0 +1,75 @@
+.container.login {
+  width: 400px;
+  background-color: #f2f9f9f8;
+  border-radius: 10px;
+
+  h2 {
+    text-align: center;
+    margin: 0;
+    padding: 15px;
+    font-weight: 400;
+    margin-top: 10px;
+  }
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 15px;
+    gap: 15px;
+    width: 90%;
+    .item {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      label {
+        font-weight: 500;
+      }
+      input {
+        height: 40px;
+        margin-top: 3px;
+        padding: 3px 10px;
+        border-radius: 5px;
+        outline: none;
+        border: 2px solid lightgray;
+        &:focus {
+          border-color: #3fa2f6;
+        }
+      }
+    }
+    button {
+      display: flex;
+      border: 1px solid lightgray;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: black;
+      text-decoration: none;
+      padding: 7px 15px;
+      font-size: medium;
+      border-radius: 5px;
+      width: 100%;
+      background-color: #fff;
+      &.submit {
+        color: #f5f8ff;
+        background-color: #4b70f5;
+        border: none;
+        &:hover {
+          background-color: #5b90f8;
+        }
+      }
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+    p {
+      color: blue;
+      cursor: pointer;
+      font-weight: 300;
+      font-size: smaller;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

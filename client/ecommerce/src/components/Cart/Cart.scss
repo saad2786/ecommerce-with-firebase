@@ -1,11 +1,12 @@
 .cart {
   padding: 20px;
   width: 20vw;
-  background-color: #f1f1f1;
+  background-color: #fff;
+  border: 1px lightgray solid;
   z-index: 999;
   position: absolute;
   top: 60px;
-  right: 0;
+  right: 70px;
   h2 {
     font-weight: 500;
   }

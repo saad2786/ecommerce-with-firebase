@@ -13,6 +13,7 @@ import Register from "./pages/Register/Register";
 import RegisterLayout from "./components/RegisterLayout/RegisterLayout";
 import Login from "./pages/Login/Login";
 import { useSelector } from "react-redux";
+import { Order } from "./pages/Order/Order";
 
 function App() {
   const { user } = useSelector((state) => state.user);
@@ -29,6 +30,7 @@ function App() {
             element={user != null ? <Layout /> : <Navigate to='login' />}
           >
             <Route path='/' element={<Home />} />
+            <Route path='/order' element={<Order />} />
             <Route path='/products/:id' element={<Products />} />
             <Route path='/product/:id' element={<Product />} />
           </Route>
@@ -56,7 +58,8 @@ function App() {
 
           // Default options for specific types
           success: {
-            duration: 3000,
+            duration: 5000,
+
             style: {
               borderLeft: "15px solid #41B06E",
             },

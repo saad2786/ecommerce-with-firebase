@@ -1,7 +1,7 @@
 .product {
   padding: 20px 50px;
   display: flex;
-  height: 80vh;
+  height: calc(100vh - 90px);
   gap: 50px;
   .left {
     flex: 1;

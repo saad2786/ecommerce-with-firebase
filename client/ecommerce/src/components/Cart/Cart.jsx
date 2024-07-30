@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 export default function Cart() {
   const data = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
+  const audio = new Audio("/audio/payment_success.mp3");
   const total = data.reduce(
     (acc, cur) => acc + cur.quantity * parseInt(cur.price),
     0,
@@ -54,8 +55,10 @@ export default function Cart() {
           try {
             const res = await makeRequest.post(`/orders`, body);
             const jsonRes = await res.data;
+            audio.play();
             console.log(jsonRes);
             toast.success("Your order placed successfully");
+            dispatch(resetCart());
           } catch (error) {
             console.log(error);
           }
@@ -85,6 +88,7 @@ export default function Cart() {
       });
 
       rzp1.open();
+
       e.preventDefault();
     } catch (err) {
       console.log(err);

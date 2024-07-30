@@ -8,16 +8,15 @@ import { app } from "../../firebase";
 import { useDispatch } from "react-redux";
 import { signOut as signOutFromRedux } from "../../redux/userReducer";
 import { useNavigate } from "react-router";
+import { logout } from "../../redux/authReducer";
 
 const auth = getAuth(app);
 const ProfileMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSignOut = () => {
-    signOut(auth).then(() => {
-      dispatch(signOutFromRedux());
-      navigate("/login");
-    });
+    dispatch(logout());
+    navigate("/login");
   };
   return (
     <div className='profileMenu'>

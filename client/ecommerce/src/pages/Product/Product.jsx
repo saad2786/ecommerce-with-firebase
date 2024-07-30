@@ -72,6 +72,7 @@ export default function Product() {
             <button
               className='addToCart'
               onClick={() => {
+                const audio = new Audio("/audio/notify.mp3");
                 dispatch(
                   addToCart({
                     id: products.id,
@@ -82,6 +83,7 @@ export default function Product() {
                     img: products.attributes.img.data.attributes.url,
                   }),
                 );
+                audio.play();
                 toast.success("Added to cart");
               }}
             >

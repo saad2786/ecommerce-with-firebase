@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./NavBar.scss";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Link, useNavigate } from "react-router-dom";
@@ -57,14 +54,6 @@ export default function NavBar() {
     <div className='navBar'>
       <div className='wrapper'>
         <div className='left'>
-          {/* <div className='item'>
-            <span>Flags</span>
-            <KeyboardArrowDownOutlinedIcon />
-          </div>
-          <div className='item'>
-            <span>USD</span>
-            <KeyboardArrowDownOutlinedIcon />
-          </div> */}
           <div className='item'>
             <Link to='products/2 '>Women</Link>
           </div>
@@ -86,9 +75,13 @@ export default function NavBar() {
           </h2>
         </div>
         <div className='right'>
-          <div className='item'>Home</div>
+          <div className='item'>
+            <Link to='/'>Home</Link>
+          </div>
 
-          <div className='item'>Order</div>
+          <div className='item'>
+            <Link to='order'>Order</Link>
+          </div>
           <div className='icons'>
             <FavoriteBorderOutlinedIcon />
             <div className='cartIcon' onClick={handleCartComponentClick}>

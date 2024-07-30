@@ -1,77 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { app } from "../../firebase";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  onAuthStateChanged,
-} from "firebase/auth";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signIn, signOut } from "../../redux/userReducer";
 import { FcGoogle } from "react-icons/fc";
 import "./Register.scss";
-
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+import { makeRequest } from "../../makeRequest";
+import { register } from "../../redux/authReducer";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const { loading, error, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (userState) => {
-      console.log(userState);
-
-      if (userState) {
-        dispatch(
-          signIn({
-            displayName: userState?.displayName,
-            email: userState.email,
-            photoUrl: userState?.photoURL,
-          }),
-        );
-        navigate("/");
-      } else {
-        dispatch(signOut());
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const createNewUserByEmailAndPassowrd = async (event) => {
-    event.preventDefault();
-    try {
-      const value = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(value);
-      toast.success("Successfuly created new account");
-    } catch (error) {
-      toast.error("Somthing went wrong!");
-      console.log(error.code);
-    }
-  };
-
-  const signUpWithGoogle = (event) => {
-    event.preventDefault();
-    signInWithPopup(auth, googleProvider);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(register({ username, email, password }));
+    navigate("/");
   };
 
   return (
     <div className='container register'>
       <h2>Create New Account</h2>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className='item'>
           <label htmlFor=''>Email</label>
           <input
             type='email'
+            required
             placeholder='Enter your email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className='item'>
+          <label htmlFor=''>Username</label>
+          <input
+            type='text'
+            placeholder='Enter your username'
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className='item'>
@@ -80,18 +52,15 @@ const Register = () => {
             type='password'
             placeholder='Password'
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <br />
-        <button
-          type='submit'
-          className='submit'
-          onClick={createNewUserByEmailAndPassowrd}
-        >
-          Register
+        <button type='submit' className='submit' disabled={loading}>
+          {loading ? "...Loading" : "Register"}
         </button>
-        <button onClick={signUpWithGoogle}>
+        <button>
           <FcGoogle size={20} /> <span>Signin with Google</span>
         </button>
 
@@ -99,6 +68,7 @@ const Register = () => {
           <p>already have an account</p>
         </Link>
       </form>
+      {error && <p>{error.message}</p>}
     </div>
   );
 };

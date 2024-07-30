@@ -1,61 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { app } from "../../firebase";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
 import toast from "react-hot-toast";
 import "./Login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signIn, signOut } from "../../redux/userReducer";
-import { FcGoogle } from "react-icons/fc";
+import { useDispatch, useSelector } from "react-redux";
 
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+import { FcGoogle } from "react-icons/fc";
+import { login } from "../../redux/authReducer";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (userState) => {
-      console.log(userState);
+  const { loading, error, user } = useSelector((state) => state.auth);
+  console.log(user);
 
-      if (userState) {
-        dispatch(
-          signIn({
-            displayName: userState.displayName,
-            email: userState.email,
-            photoUrl: userState.photoURL,
-          }),
-        );
-        toast.success("Successfully logged in");
-        navigate("/");
-      } else {
-        dispatch(signOut());
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const loginAccount = (event) => {
-    event.preventDefault();
-    signInWithEmailAndPassword(auth, email, password);
-  };
-  const signUpWithGoogle = (event) => {
-    event.preventDefault();
-    signInWithPopup(auth, googleProvider);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(login({ identifier: email, password }));
+    navigate("/");
   };
   return (
     <div className='container login'>
       <h2>Login Account</h2>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className='item'>
           <label htmlFor=''>Email</label>
           <input
@@ -63,6 +31,7 @@ const Login = () => {
             placeholder='Enter your email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className='item'>
@@ -72,13 +41,14 @@ const Login = () => {
             placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <br />
-        <button type='submit' className='submit' onClick={loginAccount}>
-          Login
+        <button type='submit' className='submit'>
+          {loading ? "...Loading" : "Login"}
         </button>
-        <button onClick={signUpWithGoogle}>
+        <button>
           <FcGoogle size={20} /> <span>Signin with Google</span>
         </button>
         <Link to='/register'>
